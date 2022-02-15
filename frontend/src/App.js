@@ -102,7 +102,7 @@ const App = () => {
                       }
                     })
                     .map((player, i) => {
-                      if (i < 21) {
+                      if (i < 27) {
                         return (
                           <Grid
                             item
@@ -147,7 +147,7 @@ const App = () => {
                       }
                     })
                     .map((player, i) => {
-                      if (i < 21) {
+                      if (i < 27) {
                         return (
                           <Grid
                             item
