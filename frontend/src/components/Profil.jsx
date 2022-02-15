@@ -14,7 +14,7 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import PanToolIcon from '@mui/icons-material/PanTool';
-import axios from "axios";
+
 
 const Profil = ({
   punkte,
@@ -56,7 +56,7 @@ const Profil = ({
   }));
 
   return (
-    <Card sx={{ maxWidth: 250 }}>
+    <Card sx={{ width: 300 }}>
       <CardHeader
         sx={{ borderBottom: "1px solid black", marginBottom: "1vh" }}
         avatar={<CardAvatar punkte={punkte} />}

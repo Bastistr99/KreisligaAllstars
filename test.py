@@ -1,14 +1,21 @@
 from bs4 import BeautifulSoup
+import os
 from pyparsing import stringStart
 import requests
 import json
 from pymongo import MongoClient
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
+PASSWORT = os.getenv('PASSWORT')
 
 
 def getkader(id, mannschaften):
 
-    client = MongoClient(
-        "mongodb+srv://kreisligaadmin:Je5koqtay8zYF5hO@cluster0.no87u.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+    mongourl = "mongodb+srv://kreisligaadmin:{}@cluster0.no87u.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(
+        PASSWORT)
+
+    client = MongoClient(mongourl)
 
     db = client["KickbaseAllstars"]
 
@@ -184,7 +191,26 @@ def getkader(id, mannschaften):
             "mannschaft": vereinsname,
             "position": position
         }
-        collection.insert_one(player)
+        collection.update_one({
+        "_id": results.split()[1]+results.split()[0]+id+position},
+        {
+            '$set': {
+                "firstname": results.split()[1],
+                "lastname": results.split()[0],
+                "alter": new_alter[i],
+                "games": converted_games[i],
+                "goals": converted_goals[i],
+                "assists": converted_assists[i],
+                "gelb": converted_gelb[i],
+                "gelbrot": converted_gelbrot[i],
+                "rot": converted_rot[i],
+                "teamid": id,
+                "image": new_image[i],
+                "punkte": punkte,
+                "mannschaft": vereinsname,
+                "position": position
+            }
+            }, True)
         mannschaft.append(player)
 
     print(mannschaft)
