@@ -4,12 +4,16 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 from bson.json_util import dumps
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
-client = MongoClient(
-    "mongodb+srv://kreisligaadmin:{}@cluster0.no87u.mongodb.net/myFirstDatabase?retryWrites=true&w=majority").format(os.getenv('PASSWORT'))
+PASSWORT = os.getenv('PASSWORT')
+
+
+mongourl =  "mongodb+srv://kreisligaadmin:{}@cluster0.no87u.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(PASSWORT)
+
+client = MongoClient(mongourl)
 
 db = client["KickbaseAllstars"]
 
